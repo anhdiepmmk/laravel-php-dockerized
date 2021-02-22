@@ -1,6 +1,7 @@
 version: '3'
 services:
   server:
+    image: anhdiepmmk/laravel-server
     build:
       context: .
       dockerfile: ./dockerfiles/nginx.dockerfile
@@ -13,6 +14,7 @@ services:
       - php
       - mysql
   php:
+    image: anhdiepmmk/laravel-phpfpm
     build:
       context: .
       dockerfile: ./dockerfiles/php.dockerfile
@@ -23,12 +25,14 @@ services:
     env_file:
       - ./env/mysql.env
   composer:
+    image: anhdiepmmk/laravel-composer
     build:
       context: ./dockerfiles
       dockerfile: composer.dockerfile
     volumes:
       - ./src:/var/www/html
   artisan:
+    image: anhdiepmmk/laravel-artisan
     build:
       context: .
       dockerfile: ./dockerfiles/php.dockerfile
